@@ -1,5 +1,7 @@
+obj
 Temp
 Library
 Logs
 .vscode
 *.sln
+*.csproj
