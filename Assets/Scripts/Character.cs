@@ -7,7 +7,7 @@ public class Character : MonoBehaviour
     public enum CharacterType
     {
         None = 0,
-        WhistlrMan,
+        WhistleMan,
         Human,
         Virus,
     }
@@ -16,6 +16,8 @@ public class Character : MonoBehaviour
 
     public CharacterType characterType = CharacterType.None;
     public float moveSpeed;
+    public float movementSmoothing = 0.2f;
+    protected Vector3 currentVelocity;
 
     // Start is called before the first frame update
     protected virtual void Start()
