@@ -2,6 +2,97 @@
 /// \page changelog Changelog
 /// \order{-10}
 ///
+/// - 4.2.11 (2019-11-28)
+/// 	- Fixed animations for the agent character were missing in the example scenes in some newer versions of Unity. This could cause exceptions to be thrown in some example scenes.
+/// 	- Removed some stray uses of the old and deprecated GUIText component. This could cause descriptions for some example scenes not to show up in newer versions of Unity.
+///
+/// - 4.2.10 (2019-11-19)
+/// 	- This release contains fixes and features that have been backported from the 4.3 beta.
+/// 	- Upgrade notes
+/// 		- This release is supported in Unity 2017.4 LTS and later. Support for earlier versions has been dropped (however it probably still works in all 2017.x releases).
+/// 		- The Unity WebPlayer target is no longer supported. This target was deprecated in Unity 5.4.
+/// 	- Known bugs
+/// 		- In some versions of Unity the spider bot in the example scenes may be missing its animations. This is due to a bug in how Unity upgrades scenes and is unfortunately tricky to fix for all Unity versions simultaneously. This does not affect any other part of the package.
+/// 	- Fixed a crash when scanning a graph on the WebGL platform and exception support is disabled.
+///
+/// - 4.2.9 (2019-11-15)
+/// 	- This release contains fixes and features that have been backported from the 4.3 beta.
+/// 	- Upgrade notes
+/// 		- This release is supported in Unity 2017.4 LTS and later. Support for earlier versions has been dropped (however it probably still works in all 2017.x releases).
+/// 		- The Unity WebPlayer target is no longer supported. This target was deprecated in Unity 5.4.
+///     - Added a visualization for which dimension of the hexagons that is being edited when using a hexagonal grid graph.
+///         [Open online documentation to see images]
+/// 	- RichAI's Funnel Simplification now does a straight line check as the first thing it does.
+/// 		This can help improve both performance and the quality of the path.
+/// 	- Added a small helper window to the scene view when the A* Inspector is open.
+/// 	    I think this should work well with the dark Unity theme as well, but please start a thread in the support forum if something looks off.
+/// 	    [Open online documentation to see images]
+/// 	- Using managed code stripping even up to the High level is now supported out of the box.
+/// 	- If an RVOController was attached to a GameObject with an AIPath/RichAI component during runtime after the movement script had been initialized then the movement script would previously possibly not find it.
+/// 		This is fixed now and the RVOController notifies the AIPath/RichAI script that it has been attached.
+/// 	- The <see cref="Pathfinding.IAstarAI.SetPath"/> method on all built-in movement scripts can now be passed a null parameter. This will clear the current path of the agent.
+/// 		In earlier versions this caused an exception to be thrown.
+/// 	- Fixed NavmeshBase.Linecast (used by RecastGraph and Navmesh linecast methods) would not fill the trace out parameter with the starting node in case the start point of the linecast was identical to the end point.
+/// 	- AIPath and RichAI now clear their paths when they are disabled. Not clearing the path has caused some issues when using object pooling and also some other unexpected behavior.
+/// 		If you want to just temporarily disable the movement then use the <see cref="Pathfinding.IAstarAI.canMove"/> or <see cref="Pathfinding.IAstarAI.isStopped"/> properties.
+/// 	- Fixed RichAI.remainingDistance could refer to the previous path for one frame after a new path had been calculated.
+/// 	- Fixed AIPath and RichAI scripts sometimes starting with a height of 0.01 when creating a new component in the unity inspector.
+/// 		Now they start with a more reasonable height of 2.0.
+/// 	- The AIBase.usingGravity setter is now protected instead of private which helps when overriding some methods.
+/// 	- The "Show Surface" mode on recast and navmesh graphs is now enabled by default when creating a new graph.
+/// 	- The system no longer destroys itself in OnApplicationQuit and is instead always destroyed during OnDestroy. Using OnApplicationQuit could cause trouble when the quitting process was cancelled (e.g. using Application.wantsToQuit).
+/// 	- Fixed exceptions could be thrown in the editor if the project contains some assemblies that can for some reason not be read. Thanks joshcamas for reporting this.
+/// 	- Changed the automatic graph coloring limits code to ignore nodes that are unwalkable. This improves the contrast when some unwalkable nodes, that are not visible anyway, have very high penalties (or whatever other value you are visualizing in the scene view).
+/// 	- Fixed missing null checks in TriangleMeshNode.GetPortal and TriangleMeshNode.SharedEdge.
+/// 	- The RichAI inspector will now show a helpful warning if one tries to use it in a scene that does not contain a navmesh or recast graph.
+/// 	- <see cref="Pathfinding.GraphUtilities.GetContours"/> for grid graphs now simplifies the contour more consistently. Previously there could be one or two additional points where the algorithm started to traverse the contour.
+///
+/// - 4.2.8 (2019-04-29)
+/// 	- Made it possible for nearest node queries on point graphs to find the closest connection instead of just the closest node.
+/// 		This will make it easier to use graphs when you have many long connections.
+/// 		See <see cref="Pathfinding.PointGraph.nearestNodeDistanceMode"/>.
+/// 	- Improved the Seeker->StartEndModifier's Connection snapping mode. Now it will behave better if the path only moves along a single connection in the graph.
+/// 	- Fixed a crash when deploying for Nintendo Switch due to a Unity bug when setting thread names. Thanks ToastyStoemp for reporting this.
+/// 	- Fixed some compiler warnings in the ObjImporter class that would show up on some platforms.
+/// 	- Fixed GridGraph.CalculateConnectionsForCellAndNeighbours would throw an exception when called with the coordinates for a node on the border of the grid. Thanks davidpare for reporting this.
+///
+/// - 4.2.7 (2019-04-05)
+/// 	- Significantly improved graph rendering performance for recast graphs when using a very large number of small tiles.
+/// 	- Fixed GridGraph.CountNodes throwing an exception when the graph is not scanned. Now it will return 0.
+///
+/// - 4.2.6 (2019-03-23)
+/// 	- Fixed AIPath.reachedDestination and RichAI.reachedDestination only worked when the y coordinate of the agent was close to zero... which it of course was in all my tests.
+/// 		Sorry about this silly bug and the headache it may have caused.
+/// 	- Fixed loading a serialized navmesh graph when the source mesh no longer existed would cause the graph to be offset if a navmesh cut was later used to cut it.
+///
+/// - 4.2.5 (2019-02-14)
+/// 	- Added a new documentation page for how to create and configure graphs during runtime. runtime-graphs (view in online documentation for working links).
+/// 	- Added a new documentation page about editing point graph connections manually. editing-graphs (view in online documentation for working links).
+/// 	- Fixed exceptions could be thrown if the project contains some assemblies that can for some reason not be read.
+/// 	- Fixed the visualization for unwalkable nodes (red cubes) sometimes disappearing in newer versions of Unity (2018.2+ I think) due to a change in how Time.renderedFrameCount works.
+/// 		Thanks Kevin Jenkins for reporting this.
+/// 	- Fixed applying optimizations (under the Optimizations tab) could cause several error messages to be logged about unsupported platforms in Unity 2018.3 or newer. Thanks NoxMortem for reporting the issue.
+/// 	- Fixed AIPath throwing an exception if it was given a valid path that contained no nodes at all.
+/// 	- Made Path.GetTagPenalty public instead of internal.
+/// 	- Added <see cref="Pathfinding.ABPath.FakePath"/>.
+/// 	- Worked around a null reference exception bug when using IL2CPP and deploying for iPhone.
+/// 		This is caused by a bug in the IL2CPP compiler.
+/// 	- Fixed custom graph types could not be used if they were in another assembly. Thanks juskelis for reporting this and founderio for finding a fix.
+///
+/// - 4.2.4 (2018-12-03)
+/// 	- Added an option for which dimension of the hexagon to adjust in the grid graph editor when using the hexagonal mode.
+/// 		This significantly helps with making a hexagonal graph line up with your other game elements as previously you might have had to manually calculate some complicated conversion factors in order to do this.
+/// 	- Fixed loading navmesh graphs from a file could be extremely slow if the graph had been saved with the source mesh field set to a mesh with an empty name and your project had a lot of things in its Resources folder.
+/// 	- Fixed a massive performance regression when using RVO together with IL2CPP and .net 4.6 due to changes in how the .net framework handles locking internally.
+/// 	- Made GraphNode.Destroy public again (it was made internal in 4.2) because without that, it is not possible to make custom graph types.
+/// 	- Made Path.PipelineState, Path.duration and Path.pathID public again (they were made internal in 4.2) because those properties are actually useful even for non-internal use.
+/// 		This also fixes some incompatibility issues with the Node Canvas integration package. Thanks jsaracev and Grofit for reporting this.
+///
+/// - 4.2.3 (2018-11-07)
+/// 	- Fixed some compiler warnings in the free version on newer versions of Unity.
+/// 	- Fixed a bug which caused point graphs to interpret the nearest node distance limit as being 1/1000th the actual value in the free version of the package and in the pro version when not using the 'optimize for sparse graph' option.
+/// 		This bug caused the point graph example scene to not work in the free version of the package.
+///
 /// - 4.2.2 (2018-10-25)
 /// 	- Fixed upgrading from an earlier 4.x version to 4.2 could cause compiler errors in some newer versions of Unity because the UnityPackage doesn't import the new directory structure correctly.
 ///
