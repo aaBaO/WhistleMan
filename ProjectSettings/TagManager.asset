@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: NPC
+    uniqueID: 645625337
+    locked: 0
+  - name: Player
+    uniqueID: 4233821157
+    locked: 0
   - name: FogOfWar
     uniqueID: 2922750129
     locked: 0

@@ -17,6 +17,8 @@ public class FooPeople : Character
     Seeker m_seeker;
     Rigidbody2D m_rb;
 
+    const string AcceptWarnVfxPath = "VFX/FooAccept";
+
     protected override void Start()
     {
         base.Start();
@@ -99,5 +101,16 @@ public class FooPeople : Character
 
         isWarned = true;
         //播放被警示的特效，停止一切移动
+        StartCoroutine(PlayVFX());
+    }
+
+    IEnumerator PlayVFX()
+    {
+        var rrq = Resources.LoadAsync<GameObject>(AcceptWarnVfxPath);
+        yield return rrq;
+
+        var go = rrq.asset as GameObject;
+
+        Instantiate<GameObject>(go, transform, false);
     }
 }
