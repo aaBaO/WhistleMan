@@ -5,85 +5,94 @@ using Pathfinding;
 
 public class Virus : Character
 {
-    public Transform target;
+    public List<Transform> targetPoints = new List<Transform>();
+    /// <summary>
+    /// 是否巡逻
+    /// </summary>
+    public bool partol;
+    int m_currentTargetPoint = 0;
+
     public float nextWaypointDistance = 2.0f;
 
-    Path path;
-    int currentWaypoint = 0;
-    bool reachedEndOfPoint = false;
+    Path m_path;
+    int m_currentWaypoint = 0;
+    bool m_reachedEndOfPoint = false;
 
-    Seeker seeker;
-    Rigidbody2D rb;
-
-    /// <summary>
-    /// 感染半径
-    /// </summary>
-    public float infectRadius = 3.0f;
+    Seeker m_seeker;
+    Rigidbody2D m_rb;
 
     protected override void Start()
     {
         base.Start();
-        seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
+        m_seeker = GetComponent<Seeker>();
+        m_rb = GetComponent<Rigidbody2D>();
 
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
+        StartPath();
+    }
+
+    void StartPath()
+    {
+        if(m_seeker && targetPoints.Count > 0)
+        {
+            if(m_currentTargetPoint >= targetPoints.Count)
+            {
+                if(partol)
+                {
+                    m_currentTargetPoint = 0;
+                } else
+                {
+                    return;
+                }
+            } 
+
+            m_seeker.StartPath(m_rb.position, targetPoints[m_currentTargetPoint].position, OnPathComplete);
+        }
     }
 
     void OnPathComplete(Path path)
     {
         if(!path.error)
         {
-            this.path = path;
-            currentWaypoint = 0;
+            this.m_path = path;
+            m_currentWaypoint = 0;
         }
     }
 
     void FixedUpdate()
     {
-        if(path == null)
+        if(m_path == null)
             return;
 
-        if(currentWaypoint >= path.vectorPath.Count)
+        if(m_currentWaypoint >= m_path.vectorPath.Count)
         {
-            reachedEndOfPoint = true;
+            m_reachedEndOfPoint = true;
+            m_path = null;
             return;
         } else
         {
-            reachedEndOfPoint = false;
+            m_reachedEndOfPoint = false;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 direction = ((Vector2)m_path.vectorPath[m_currentWaypoint] - m_rb.position).normalized;
         Vector2 force = direction * moveSpeed * Time.deltaTime;
 
-        rb.AddForce(force);
+        m_rb.AddForce(force);
 
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        float distance = Vector2.Distance(m_rb.position, m_path.vectorPath[m_currentWaypoint]);
 
         if(distance < nextWaypointDistance)
         {
-            currentWaypoint++;
+            m_currentWaypoint++;
         }
     }
 
     protected override void Update()
     {
-        var colliders = Physics2D.OverlapCircleAll(rb.position, infectRadius);
-        if(colliders.Length > 0)
+        if(m_reachedEndOfPoint)
         {
-            foreach (var item in colliders)
-            {
-                if(item.CompareTag("People"))
-                {
-                    FooPeople fooPeople = item.GetComponent<FooPeople>();
-                    fooPeople.BeInfected();
-                } 
-            }
+            m_reachedEndOfPoint = false;
+            m_currentTargetPoint++;
+            StartPath();
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        if(rb != null)
-            Gizmos.DrawWireSphere(rb.position, infectRadius);
     }
 }

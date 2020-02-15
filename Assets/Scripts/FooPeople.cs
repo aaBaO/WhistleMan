@@ -6,90 +6,73 @@ using Pathfinding;
 public class FooPeople : Character
 {
     public bool isInfected = false;
+    public bool isWarned = false;
     public float moveDelay = 0;
-
-    /// <summary>
-    /// 感染半径
-    /// </summary>
-    public float infectRadius = 3;
-
     public Transform target;
     public float nextWaypointDistance = 2.0f;
-    Path path;
-    int currentWaypoint = 0;
-    bool reachedEndOfPoint = false;
+    Path m_path;
+    int m_currentWaypoint = 0;
+    bool m_reachedEndOfPoint = false;
 
-    Seeker seeker;
-    Rigidbody2D rb;
+    Seeker m_seeker;
+    Rigidbody2D m_rb;
 
     protected override void Start()
     {
         base.Start();
-        seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
+        m_seeker = GetComponent<Seeker>();
+        m_rb = GetComponent<Rigidbody2D>();
 
         Invoke("StartPath", moveDelay);
     }
 
     void StartPath()
     {
-        if(target != null)
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+        if(isWarned)
+            return;
+
+        if(target != null && m_seeker != null)
+            m_seeker.StartPath(m_rb.position, target.position, OnPathComplete);
     }
 
     void OnPathComplete(Path path)
     {
         if(!path.error)
         {
-            this.path = path;
-            currentWaypoint = 0;
+            this.m_path = path;
+            m_currentWaypoint = 0;
         }
     }
 
     void FixedUpdate()
     {
-        if(path == null)
+        if(m_path == null)
             return;
 
-        if(currentWaypoint >= path.vectorPath.Count)
+        if(m_currentWaypoint >= m_path.vectorPath.Count)
         {
-            reachedEndOfPoint = true;
+            m_reachedEndOfPoint = true;
             return;
         } else
         {
-            reachedEndOfPoint = false;
+            m_reachedEndOfPoint = false;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 direction = ((Vector2)m_path.vectorPath[m_currentWaypoint] - m_rb.position).normalized;
         Vector2 force = direction * moveSpeed * Time.deltaTime;
 
-        rb.AddForce(force);
+        m_rb.AddForce(force);
 
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        float distance = Vector2.Distance(m_rb.position, m_path.vectorPath[m_currentWaypoint]);
 
         if(distance < nextWaypointDistance)
         {
-            currentWaypoint++;
+            m_currentWaypoint++;
         }
     }
 
     protected override void Update()
     {
-        if(isInfected)
-        {
-            var colliders = Physics2D.OverlapCircleAll(rb.position, infectRadius);
-            if(colliders.Length > 0)
-            {
-                foreach (var item in colliders)
-                {
-                    if(item.CompareTag("People"))
-                    {
-                        FooPeople fooPeople = item.GetComponent<FooPeople>();
-                        fooPeople.BeInfected();
-                    } 
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -97,7 +80,24 @@ public class FooPeople : Character
     /// </summary>
     public void BeInfected()
     {
+        if(isInfected || isWarned)
+            return;
+
         isInfected = true;
-        m_avatar.transform.localScale = new Vector3(2, 2, 1);
+        gameObject.AddComponent<InfectionSource>();
+
+        SimpleEventSystem.instance.FireEvent(EventEnum.PeopleInfected);
+    }
+
+    /// <summary>
+    /// 被警告
+    /// </summary>
+    public void BeWarned()
+    {
+        if(isInfected || isWarned)
+            return;
+
+        isWarned = true;
+        //播放被警示的特效，停止一切移动
     }
 }

@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2434292963444345813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1164775543381246228}
+  - component: {fileID: 1847165106635835874}
+  m_Layer: 0
+  m_Name: GameLevel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1164775543381246228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2434292963444345813}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 599.0923, y: 344.4181, z: -7.125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8869855114332327192}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1847165106635835874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2434292963444345813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73901e2895b9b4043a71f2a0dfbb609d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelTotalTime: 120000
+  elapsedTime: 0
+  virusCount: 0
+  peopleCount: 0
 --- !u!1 &3969394414459116650
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +79,7 @@ Transform:
   - {fileID: 7710044479731573995}
   - {fileID: 7710044479256340791}
   - {fileID: 7710044479945701996}
+  - {fileID: 1164775543381246228}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7710044478547150304}
   - component: {fileID: 7710044478547150305}
-  - component: {fileID: 7710044478547150306}
   - component: {fileID: 7710044478547150319}
   m_Layer: 0
   m_Name: Main Camera
@@ -111,14 +158,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7710044478547150306
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7710044478547150307}
-  m_Enabled: 1
 --- !u!114 &7710044478547150319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,3 +754,4 @@ MonoBehaviour:
   characterType: 1
   moveSpeed: 400
   movementSmoothing: 0
+  whistleRadius: 3

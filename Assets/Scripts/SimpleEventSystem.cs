@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class SimipleEventSystem : Singleton<SimipleEventSystem>
+public class SimpleEventSystem : Singleton<SimpleEventSystem>
 {
     public class EventCallback
     {

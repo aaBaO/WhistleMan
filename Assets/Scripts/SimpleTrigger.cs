@@ -17,7 +17,7 @@ public class SimpleTrigger : MonoBehaviour
     {
         if(other.CompareTag(triggerTag))
         {
-            SimipleEventSystem.instance.FireEvent(eventEnum);        
+            SimpleEventSystem.instance.FireEvent(eventEnum);        
         }
     }
 }

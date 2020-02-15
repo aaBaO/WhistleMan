@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class Player : Character 
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    public float whistleRadius = 3.0f;
+
     Rigidbody2D m_rigidbody;
+
     protected override void Start()
     {
         base.Start();
         m_rigidbody = GetComponent<Rigidbody2D>();
-        int hiteventid = SimipleEventSystem.instance.AddEventListener(EventEnum.PlayerHitTrigger, ()=>{Debug.Log("hit");});
     }
 
     protected override void Update()
     {
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            var center = transform.position;
+            var colliders = Physics2D.OverlapCircleAll(center, whistleRadius);
+            if(colliders.Length > 0)
+            {
+                foreach (var item in colliders)
+                {
+                    if(item.CompareTag("People"))
+                    {
+                        FooPeople fooPeople = item.GetComponent<FooPeople>();
+                        fooPeople.BeWarned();
+                    } 
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
