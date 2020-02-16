@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelTotalTime: 120000
+  targetSaveCount: 0
   virusCount: 0
   safePeopleCount: 0
   warnedPeopleCount: 0
@@ -213,7 +214,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 8
   m_Depth: -10
   m_CullingMask:
     serializedVersion: 2
@@ -243,7 +244,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogOfWarCamera: {fileID: 0}
   fogOfWarMainImage: {fileID: 4313586736850589665}
-  rtWidth: 1024
+  rtWidth: 1366
+--- !u!1 &5804858189441912138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222673773247230996}
+  - component: {fileID: 4450058211572521778}
+  m_Layer: 0
+  m_Name: BuildingMaskTrigger
+  m_TagString: BuildingMaskTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1222673773247230996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804858189441912138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7710044478849842936}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &4450058211572521778
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804858189441912138}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.018306404, y: 0.5432358}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7925275, y: 0.32858467}
+  m_EdgeRadius: 0
 --- !u!1 &6077847235061718055
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +542,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -564,8 +622,9 @@ Transform:
   m_Children:
   - {fileID: 7710044479630879479}
   - {fileID: 7902408212006489358}
-  - {fileID: 7716009898964061143}
-  - {fileID: 9037674464273789080}
+  - {fileID: 5349188308198227274}
+  - {fileID: 9039320503221586469}
+  - {fileID: 1222673773247230996}
   m_Father: {fileID: 7710044479945701996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -637,12 +696,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 12.236597, y: 24.908792}
-      - {x: -52.0188, y: 24.96333}
-      - {x: -51.765804, y: -34.576145}
-      - {x: 12.192013, y: -35.096954}
-      - {x: 12.139961, y: -35.120365}
-      - {x: 12.070246, y: -35.068695}
+    - - {x: 24.021877, y: 19.993544}
+      - {x: -43.947052, y: 19.921833}
+      - {x: -44.057373, y: -29.984566}
+      - {x: 23.984482, y: -29.893232}
 --- !u!1 &7710044479470269712
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +955,7 @@ MonoBehaviour:
   m_Follow: {fileID: 7710044479945701996}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 12
+    OrthographicSize: 8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -1100,8 +1157,9 @@ MonoBehaviour:
   moveSpeed: 400
   movementSmoothing: 0
   whistleRadius: 3
-  dust: {fileID: 1519160364689688011}
-  whistleWave: {fileID: 7943352874303139772}
+  whistleCD: 2
+  dust: {fileID: 5349188308198227304}
+  whistleWave: {fileID: 9039320503221586433}
 --- !u!1001 &5349188308198226371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1171,13 +1229,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5274d150130308046b088084776a2c75, type: 3}
---- !u!4 &7716009898964061143 stripped
+--- !u!4 &5349188308198227274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2389410788750488084, guid: 5274d150130308046b088084776a2c75,
     type: 3}
   m_PrefabInstance: {fileID: 5349188308198226371}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1519160364689688011 stripped
+--- !u!198 &5349188308198227304 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6857018647877876744, guid: 5274d150130308046b088084776a2c75,
     type: 3}
@@ -1241,13 +1299,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8e63b279599a3848a3901e598448b16, type: 3}
---- !u!4 &9037674464273789080 stripped
+--- !u!4 &9039320503221586469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8544374984408638, guid: c8e63b279599a3848a3901e598448b16,
     type: 3}
   m_PrefabInstance: {fileID: 9039320503221587622}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &7943352874303139772 stripped
+--- !u!198 &9039320503221586433 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1391167259858641178, guid: c8e63b279599a3848a3901e598448b16,
     type: 3}
