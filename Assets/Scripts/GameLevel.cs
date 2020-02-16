@@ -4,38 +4,53 @@ using UnityEngine.SceneManagement;
 public class GameLevel : MonoBehaviour
 {
     public int levelTotalTime = 12000; //ms
+    public int targetSaveCount;
     float m_startTime;
     public float leftTime {private set; get;}
 
     public int virusCount;
     FooPeople[] m_peopleArray;
 
-    int peopleCount;
+    int m_peopleCount;
     public int safePeopleCount;
     public int warnedPeopleCount;
 
+    bool m_isEndOfLevel;
+
     void Start()
     {
-        leftTime = 0;
+        leftTime = float.MaxValue;
         m_startTime = Time.time;
 
         virusCount = Object.FindObjectsOfType(typeof(Virus)).Length;
         m_peopleArray = Object.FindObjectsOfType(typeof(FooPeople)) as FooPeople[];
-        peopleCount = m_peopleArray.Length;
+        m_peopleCount = m_peopleArray.Length;
+
+        m_isEndOfLevel = false;
     }
 
     void Update()
     {
-        if(leftTime <= 0 || safePeopleCount <= 0)
+        if(m_isEndOfLevel)
         {
-            //failed
-        } 
-
-        if(peopleCount - warnedPeopleCount <= 0)
-        {
-            //success
-            Debug.Log("win");
+            return;
         }
+
+        if(leftTime <= 0)
+        {
+            //Game over, check safe people count.
+            //You'll win if you save more then target count.
+            GameViewManager.instance.OpenView(GameViewConst.GameResultView);
+            if(safePeopleCount >= targetSaveCount)
+            {
+                LevelController.instance.currentLevelSuccess = true;
+            } else
+            {
+                LevelController.instance.currentLevelSuccess = false;
+            }
+            m_isEndOfLevel = true;
+            return;
+        } 
 
         leftTime = m_startTime + levelTotalTime * 0.001f - Time.time;
 

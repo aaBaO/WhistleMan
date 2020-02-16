@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class GameViewConst
 {
-    public static string StartMenuPath = "UI/StartMenu";
-    public static string LoadingViewPath = "UI/LoadingView";
-    public static string GameViewPath = "UI/GameView";
-    public static string ListViewPath = "UI/ListView";
+    public static string StartMenu = "StartMenu";
+    public static string LoadingView = "LoadingView";
+    public static string GameView = "GameView";
+    public static string ListView = "ListView";
+    public static string GameResultView = "GameResultView";
 
     public static Dictionary<string, string> ViewDic = new Dictionary<string, string>{
-        {"StartMenu", StartMenuPath}, 
-        {"LoadingView", LoadingViewPath}, 
-        {"GameView", GameViewPath}, 
-        {"ListView", ListViewPath}, 
+        {StartMenu, "UI/StartMenu"}, 
+        {LoadingView, "UI/LoadingView"}, 
+        {GameView, "UI/GameView"}, 
+        {ListView, "UI/ListView"}, 
+        {GameResultView, "UI/GameResultView"}, 
     };
 }
 

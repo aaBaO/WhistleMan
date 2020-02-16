@@ -9,7 +9,7 @@ public class GameStart : MonoBehaviour
     void Start()
     {
         GameViewManager.instance.InitUIRootCanvas(UIRootCanvas);
-        GameViewManager.instance.OpenView("StartMenu"); 
+        GameViewManager.instance.OpenView(GameViewConst.StartMenu); 
     }
 
     // Update is called once per frame

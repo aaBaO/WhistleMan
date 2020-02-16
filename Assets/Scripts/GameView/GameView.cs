@@ -15,7 +15,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public GameLevel gameLevel;
 
-    int peopleInfectedEventId;
+    int m_peopleInfectedEventId;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class GameView : MonoBehaviour, IGameView
         btn_restart.onClick.AddListener(OnClick_btn_restart);
         btn_back.onClick.AddListener(OnClick_btn_back);
 
-        peopleInfectedEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.PeopleInfected, OnPeopleInfected);
+        m_peopleInfectedEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.PeopleInfected, OnPeopleInfected);
     }
 
     void Update()
@@ -42,7 +42,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public void OnViewClose()
     {
-        SimpleEventSystem.instance.RemoveEventListener(EventEnum.PeopleInfected, peopleInfectedEventId);
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.PeopleInfected, m_peopleInfectedEventId);
         Destroy(gameObject);
     }
 

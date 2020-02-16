@@ -36530,6 +36530,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1847165106635835874, guid: ba0983db7425bd146918c796d9a05e06,
+        type: 3}
+      propertyPath: levelTotalTime
+      value: 12000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847165106635835874, guid: ba0983db7425bd146918c796d9a05e06,
+        type: 3}
+      propertyPath: targetSaveCount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3969394414459116650, guid: ba0983db7425bd146918c796d9a05e06,
         type: 3}
       propertyPath: m_Name
