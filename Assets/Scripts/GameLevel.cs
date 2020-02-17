@@ -20,6 +20,7 @@ public class GameLevel : MonoBehaviour
     void Start()
     {
         leftTime = float.MaxValue;
+        safePeopleCount = int.MaxValue;
         m_startTime = Time.time;
 
         virusCount = Object.FindObjectsOfType(typeof(Virus)).Length;
@@ -44,6 +45,7 @@ public class GameLevel : MonoBehaviour
 
         if(leftTime <= 0)
         {
+            leftTime = 0;
             //Game over, check safe people count.
             //You'll win if you save more then target count.
             GameViewManager.instance.OpenView(GameViewConst.GameResultView);

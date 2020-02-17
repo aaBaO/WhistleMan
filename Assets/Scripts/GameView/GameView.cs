@@ -36,7 +36,7 @@ public class GameView : MonoBehaviour, IGameView
 
     void Update()
     {
-        lefttimeTimer.text = m_gameLevel.leftTime.ToString();
+        lefttimeTimer.text = string.Format("{0:00}:{1:00}", m_gameLevel.leftTime / 60, m_gameLevel.leftTime % 60);
         safePeopleCount.text = string.Format("{0}Safe", m_gameLevel.safePeopleCount);
 
         //Update Shield Left time.

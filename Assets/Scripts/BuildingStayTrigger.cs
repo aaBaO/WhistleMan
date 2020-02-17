@@ -8,7 +8,8 @@ public class BuildingStayTrigger : MonoBehaviour
     {
         if(other.CompareTag("Virus") || other.CompareTag("People"))
         {
-            SimpleEventSystem.instance.FireEvent(EventEnum.NPCStayInBuilding);
+            Character c = other.GetComponent<Character>();
+            c.avater.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
         }
 
         if(other.CompareTag("BuildingMaskTrigger"))
@@ -21,7 +22,8 @@ public class BuildingStayTrigger : MonoBehaviour
     {
         if(other.CompareTag("Virus") || other.CompareTag("People"))
         {
-            SimpleEventSystem.instance.FireEvent(EventEnum.NPCExitBuilding);
+            Character c = other.GetComponent<Character>();
+            c.avater.SetMaskInteraction(SpriteMaskInteraction.None);
         }
 
         if(other.CompareTag("BuildingMaskTrigger"))

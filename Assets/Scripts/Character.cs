@@ -13,6 +13,13 @@ public class Character : MonoBehaviour
     }
 
     protected CharacterAvatar m_avatar;
+    public CharacterAvatar avater
+    {
+        get
+        {
+            return m_avatar; 
+        }
+    }
 
     public CharacterType characterType = CharacterType.None;
     public float moveSpeed;

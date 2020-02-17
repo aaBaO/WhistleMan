@@ -23,5 +23,11 @@ public class CharacterAvatar : MonoBehaviour
         {
             r.maskInteraction = m_maskInteraction;
         }
+        //Also set VFX
+        ParticleSystemRenderer[] psrs = transform.parent.GetComponentsInChildren<ParticleSystemRenderer>();
+        foreach(var psr in psrs)
+        {
+            psr.maskInteraction = mode;   
+        }
     }
 }
