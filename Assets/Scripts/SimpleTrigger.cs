@@ -5,8 +5,8 @@ using UnityEngine;
 public class SimpleTrigger : MonoBehaviour
 {
     public EventEnum eventEnum;
-
     public string triggerTag = "Untagged";
+    public bool destroyWhenTriggered = false;
 
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
@@ -18,6 +18,8 @@ public class SimpleTrigger : MonoBehaviour
         if(other.CompareTag(triggerTag))
         {
             SimpleEventSystem.instance.FireEvent(eventEnum);        
+            if(destroyWhenTriggered)
+                Destroy(gameObject);
         }
     }
 }

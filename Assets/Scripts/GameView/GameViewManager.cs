@@ -23,7 +23,8 @@ public class GameViewManager : Singleton<GameViewManager>
 {
     Stack m_viewStack;
     Dictionary<string, IGameView> m_openedViewDic;
-    GameObject m_UIRootCanvas;
+    GameObject m_canvasGameObject;
+    public Canvas UIRootCanvas { get; private set;}
 
     public GameViewManager()
     {
@@ -32,8 +33,9 @@ public class GameViewManager : Singleton<GameViewManager>
     }
 
     public void InitUIRootCanvas(GameObject go)
-    {
-        m_UIRootCanvas = go;
+    {   
+        m_canvasGameObject = go;
+        UIRootCanvas = go.GetComponent<Canvas>();
     }
 
     public void OpenView(string viewName)
@@ -50,7 +52,7 @@ public class GameViewManager : Singleton<GameViewManager>
             ResourceRequest rr = Resources.LoadAsync<GameObject>(viewpath);
             rr.completed += (async)=>{
                 GameObject asset = rr.asset as GameObject;
-                GameObject viewgo = GameObject.Instantiate(asset, m_UIRootCanvas.transform, false);
+                GameObject viewgo = GameObject.Instantiate(asset, m_canvasGameObject.transform, false);
                 IGameView view = viewgo.GetComponent<IGameView>();
                 view.OnViewOpen();
                 m_openedViewDic.Add(viewName, view);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,14 +19,41 @@ public class Player : Character
     /// -1=down, 1=up
     /// </summary>
     int m_avatarYDirection = 0;
-    public ParticleSystem dust;
-    public ParticleSystem whistleWave;
+    public ParticleSystem m_VFX_dustVFX;
+    public ParticleSystem m_VFX_shield;
+    public ParticleSystem m_VFX_whistleWave;
+
+    /// <summary>
+    /// 玩家获得护盾
+    /// </summary>
+    int m_hitShieldEventId;
+    int m_playerShieldEndEventId;
+    Shield m_shield;
 
     protected override void Start()
     {
         base.Start();
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_lastWhistleTime = float.MinValue;
+
+        AddListener();
+    }
+
+    private void AddListener()
+    {
+        m_hitShieldEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.PlayerHitShield, OnPlayerHitShield);
+        m_playerShieldEndEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.PlayerShieldEnd, OnPlayerShieldEnd);
+    }
+
+    protected override void OnDestroy()
+    {
+        RemoveListener();
+    }
+
+    private void RemoveListener()
+    {
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.PlayerHitShield, m_hitShieldEventId);
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.PlayerShieldEnd, m_playerShieldEndEventId);
     }
 
     protected override void Update()
@@ -36,7 +64,7 @@ public class Player : Character
                 return;
 
             m_lastWhistleTime = Time.time;
-            whistleWave.Play();
+            m_VFX_whistleWave.Play();
             var center = transform.position;
             var colliders = Physics2D.OverlapCircleAll(center, whistleRadius);
             if(colliders.Length > 0)
@@ -55,10 +83,10 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-        PlayerInput();
+        PlayerMovement();
     }
 
-    private void PlayerInput()
+    private void PlayerMovement()
     {
         var h = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         var v = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
@@ -106,7 +134,43 @@ public class Player : Character
 
     void PlayDust()
     {
-        if(dust)
-            dust.Play();
+        if(m_VFX_dustVFX)
+            m_VFX_dustVFX.Play();
+    }
+
+    void OnPlayerHitShield()
+    {
+        if(m_VFX_shield)
+            m_VFX_shield.Play();
+
+        if(m_shield)
+        {
+            DestroyImmediate(m_shield);
+            m_shield = null;
+        }
+        m_shield = gameObject.AddComponent<Shield>();
+    }
+
+    void OnPlayerShieldEnd()
+    {
+        if(m_VFX_shield)
+            m_VFX_shield.Stop();
+
+        m_shield = null;
+    }
+
+    public float GetWhitleCoolDown()
+    {
+        float cd = Time.time - m_lastWhistleTime;
+        return cd < whistleCD ? 1 - (cd / whistleCD) : 0; 
+    }
+
+    public float GetShieldLeftTime()
+    {
+        if(m_shield)
+        {
+            return (m_shield.leftTime / m_shield.duration);
+        }
+        return 0;
     }
 }

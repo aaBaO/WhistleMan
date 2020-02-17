@@ -1,7 +1,7 @@
 public enum EventEnum
 {
     Minimum = 0,
-    PlayerHitTrigger,
+    PlayerHitShield,
     PeopleInfected,
     GameWin,
     GameLose,
@@ -9,4 +9,5 @@ public enum EventEnum
     PlayerExitBuilding,
     NPCStayInBuilding,
     NPCExitBuilding,
+    PlayerShieldEnd,
 }

@@ -36,6 +36,12 @@ public class GameLevel : MonoBehaviour
             return;
         }
 
+        if(safePeopleCount <= 0)
+        {
+            m_isEndOfLevel = true;
+            return;
+        }
+
         if(leftTime <= 0)
         {
             //Game over, check safe people count.
