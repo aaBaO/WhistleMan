@@ -27,7 +27,14 @@ public class Virus : Character
         m_seeker = GetComponent<Seeker>();
         m_rb = GetComponent<Rigidbody2D>();
 
+        AddBuildingStayExitListenter();
         StartPath();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        RemoveBuildingStayExitListener();
     }
 
     void StartPath()
@@ -95,4 +102,32 @@ public class Virus : Character
             StartPath();
         }
     }
+
+#region NPCStayExitWithBuilding
+    int m_npcStayBuildingEventId;
+    int m_npcExitBuildingEventId;
+
+    void AddBuildingStayExitListenter()
+    {
+        m_npcStayBuildingEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.NPCStayInBuilding, OnNPCStayBuilding);
+        m_npcExitBuildingEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.NPCExitBuilding, OnNPCExitBuilding);
+    }
+
+    void RemoveBuildingStayExitListener()
+    {
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.NPCStayInBuilding, m_npcStayBuildingEventId);
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.NPCExitBuilding, m_npcExitBuildingEventId);
+    }
+
+    void OnNPCStayBuilding()
+    {
+        if(m_avatar.GetMaskInteraction() == SpriteMaskInteraction.None)
+            m_avatar.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+    }
+
+    void OnNPCExitBuilding()
+    {
+        m_avatar.SetMaskInteraction(SpriteMaskInteraction.None);
+    }
+#endregion
 }

@@ -26,6 +26,13 @@ public class FooPeople : Character
         m_rb = GetComponent<Rigidbody2D>();
 
         Invoke("StartPath", moveDelay);
+        AddBuildingStayExitListenter();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        RemoveBuildingStayExitListener(); 
     }
 
     void StartPath()
@@ -113,4 +120,32 @@ public class FooPeople : Character
 
         Instantiate<GameObject>(go, transform, false);
     }
+
+#region NPCStayExitWithBuilding
+    int m_npcStayBuildingEventId;
+    int m_npcExitBuildingEventId;
+
+    void AddBuildingStayExitListenter()
+    {
+        m_npcStayBuildingEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.NPCStayInBuilding, OnNPCStayBuilding);
+        m_npcExitBuildingEventId = SimpleEventSystem.instance.AddEventListener(EventEnum.NPCExitBuilding, OnNPCExitBuilding);
+    }
+
+    void RemoveBuildingStayExitListener()
+    {
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.NPCStayInBuilding, m_npcStayBuildingEventId);
+        SimpleEventSystem.instance.RemoveEventListener(EventEnum.NPCExitBuilding, m_npcExitBuildingEventId);
+    }
+
+    void OnNPCStayBuilding()
+    {
+        if(m_avatar.GetMaskInteraction() == SpriteMaskInteraction.None)
+            m_avatar.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+    }
+
+    void OnNPCExitBuilding()
+    {
+        m_avatar.SetMaskInteraction(SpriteMaskInteraction.None);
+    }
+#endregion
 }

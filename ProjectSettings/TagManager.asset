@@ -6,6 +6,7 @@ TagManager:
   tags:
   - People
   - BuildingMaskTrigger
+  - Virus
   layers:
   - Default
   - TransparentFX
