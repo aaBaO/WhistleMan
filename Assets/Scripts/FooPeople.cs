@@ -24,6 +24,11 @@ public class FooPeople : Character
 
     const string AcceptWarnVfxPath = "VFX/FooAccept";
 
+    /// <summary>
+    /// -1=left, 1=right
+    /// </summary>
+    int m_avatarXDirection = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -102,6 +107,32 @@ public class FooPeople : Character
         {
             m_currentWaypoint++;
         }
+
+        if(m_rb.velocity.magnitude > 0.001f)
+        {
+            m_avatar.PlayAnimation("walk");
+        }
+        else
+        {
+            m_avatar.PlayAnimation("idle");
+        }
+
+        if(m_rb.velocity.x > 0.01f)
+        {
+            FlipAvatar(1);
+        } else if(m_rb.velocity.x < -0.01f)
+        {
+            FlipAvatar(-1);
+        }
+    }
+
+    void FlipAvatar(int direction)
+    {
+        if(m_avatarXDirection == direction)
+            return;
+
+        m_avatarXDirection = direction;
+        m_avatar.transform.rotation = direction == -1 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
     }
 
     protected override void Update()

@@ -6,9 +6,13 @@ public class CharacterAvatar : MonoBehaviour
 
     SpriteRenderer[] m_allSprite;
 
+    Animator m_animator;
+    string m_currentState;
+
     private void Start()
     {
         m_allSprite = GetComponentsInChildren<SpriteRenderer>();    
+        m_animator = GetComponentInChildren<Animator>();  
     }
 
     public SpriteMaskInteraction GetMaskInteraction()
@@ -32,5 +36,14 @@ public class CharacterAvatar : MonoBehaviour
             Debug.Log("here set psr");
             psr.maskInteraction = mode;   
         }
+    }
+
+    public void PlayAnimation(string statename)
+    {
+        if(m_currentState == statename || m_animator == null)
+            return;
+
+        m_animator.Play(statename);
+        m_currentState = statename;
     }
 }

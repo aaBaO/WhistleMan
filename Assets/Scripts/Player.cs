@@ -120,6 +120,15 @@ public class Player : Character
         {
             SetYDirection(-1);
         }
+
+        if(m_rigidbody.velocity.magnitude > 0.001f)
+        {
+            m_avatar.PlayAnimation("walk");
+        }
+        else
+        {
+            m_avatar.PlayAnimation("idle");
+        }
     }
 
     void FlipAvatar(int direction)
@@ -128,6 +137,7 @@ public class Player : Character
             return;
 
         m_avatarXDirection = direction;
+        m_avatar.transform.rotation = direction == -1 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
         PlayDust();
     }
 
