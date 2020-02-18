@@ -8,11 +8,12 @@ public class StartMenu : MonoBehaviour, IGameView
     public Button btn_Start;
     public Button btn_quit;
 
-    // Start is called before the first frame update
     void Start()
     {
         btn_Start.onClick.AddListener(OnClick_btn_start);         
         btn_quit.onClick.AddListener(OnClick_btn_quit);         
+
+        AudioController.instance.PlayBgm(AudioController.SoundType.MenuBgm);
     }
 
     // Update is called once per frame

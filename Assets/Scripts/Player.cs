@@ -30,9 +30,16 @@ public class Player : Character
     int m_playerShieldEndEventId;
     Shield m_shield;
 
+    /// <summary>
+    /// 是否被感染
+    /// </summary>
+    public bool m_isInfected;
+
     protected override void Start()
     {
         base.Start();
+
+        m_isInfected = false;
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_lastWhistleTime = float.MinValue;
 
@@ -65,6 +72,7 @@ public class Player : Character
 
             m_lastWhistleTime = Time.time;
             m_VFX_whistleWave.Play();
+            AudioController.instance.PlayOneShotSound(AudioController.SoundType.Whistle);
             var center = transform.position;
             var colliders = Physics2D.OverlapCircleAll(center, whistleRadius);
             if(colliders.Length > 0)
@@ -149,6 +157,8 @@ public class Player : Character
             m_shield = null;
         }
         m_shield = gameObject.AddComponent<Shield>();
+
+        AudioController.instance.PlayOneShotSound(AudioController.SoundType.GetShield);
     }
 
     void OnPlayerShieldEnd()
@@ -157,6 +167,7 @@ public class Player : Character
             m_VFX_shield.Stop();
 
         m_shield = null;
+        AudioController.instance.PlayOneShotSound(AudioController.SoundType.ShieldEnd);
     }
 
     public float GetWhitleCoolDown()
@@ -172,5 +183,22 @@ public class Player : Character
             return (m_shield.leftTime / m_shield.duration);
         }
         return 0;
+    }
+
+    /// <summary>
+    /// 被感染
+    /// </summary>
+    public void BeInfected()
+    {
+        if(m_shield || m_isInfected)
+            return;
+
+        m_isInfected = true;
+
+        gameObject.AddComponent<InfectionSource>();
+
+        SimpleEventSystem.instance.FireEvent(EventEnum.GameOver);
+
+        this.enabled = false;
     }
 }

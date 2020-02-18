@@ -38,6 +38,12 @@ public class InfectionSource : MonoBehaviour
                     FooPeople fooPeople = item.GetComponent<FooPeople>();
                     fooPeople.BeInfected();
                 } 
+
+                if(item.CompareTag("Player"))
+                {
+                    Player player = item.GetComponent<Player>();
+                    player.BeInfected();
+                } 
             }
         }
     }

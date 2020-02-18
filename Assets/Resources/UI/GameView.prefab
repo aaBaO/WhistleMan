@@ -65,7 +65,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: -6460368395533782001, guid: 9cda82c13e783b645b0bf1c0c8eaa93c,
     type: 3}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
@@ -409,9 +409,9 @@ MonoBehaviour:
   btn_restart: {fileID: 2316064584993079954}
   btn_back: {fileID: 2316064584851784339}
   img_whistleCoolDown: {fileID: 4902671328791868608}
-  whistleImageOffset: {x: 0, y: 50, z: 0}
+  whistleImageOffset: {x: 0, y: 75, z: 0}
   img_shieldLeftTime: {fileID: 7382447371736624156}
-  shieldImageOffset: {x: 0, y: 60, z: 0}
+  shieldImageOffset: {x: 0, y: 90, z: 0}
 --- !u!1 &2316064584993079964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1236,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: -6460368395533782001, guid: 9cda82c13e783b645b0bf1c0c8eaa93c,
     type: 3}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0

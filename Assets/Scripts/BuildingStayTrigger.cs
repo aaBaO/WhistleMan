@@ -8,6 +8,7 @@ public class BuildingStayTrigger : MonoBehaviour
     {
         if(other.CompareTag("Virus") || other.CompareTag("People"))
         {
+            Debug.Log("here stay");
             Character c = other.GetComponent<Character>();
             c.avater.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
         }

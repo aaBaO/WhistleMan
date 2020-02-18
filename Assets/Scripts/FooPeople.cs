@@ -8,7 +8,12 @@ public class FooPeople : Character
     public bool isInfected = false;
     public bool isWarned = false;
     public float moveDelay = 0;
-    public Transform target;
+    public List<Transform> targetPoints = new List<Transform>();
+    /// <summary>
+    /// 是否巡逻
+    /// </summary>
+    public bool partol;
+    int m_currentTargetPoint = 0;
     public float nextWaypointDistance = 2.0f;
     Path m_path;
     int m_currentWaypoint = 0;
@@ -27,6 +32,11 @@ public class FooPeople : Character
 
         Invoke("StartPath", moveDelay);
         AddBuildingStayExitListenter();
+
+        if(targetPoints.Count <= 0)
+        {
+            m_seeker.enabled = false;
+        }
     }
 
     protected override void OnDestroy()
@@ -40,8 +50,21 @@ public class FooPeople : Character
         if(isWarned)
             return;
 
-        if(target != null && m_seeker != null)
-            m_seeker.StartPath(m_rb.position, target.position, OnPathComplete);
+        if(m_seeker && targetPoints.Count > 0)
+        {
+            if(m_currentTargetPoint >= targetPoints.Count)
+            {
+                if(partol)
+                {
+                    m_currentTargetPoint = 0;
+                } else
+                {
+                    return;
+                }
+            } 
+
+            m_seeker.StartPath(m_rb.position, targetPoints[m_currentTargetPoint].position, OnPathComplete);
+        }
     }
 
     void OnPathComplete(Path path)
@@ -61,6 +84,7 @@ public class FooPeople : Character
         if(m_currentWaypoint >= m_path.vectorPath.Count)
         {
             m_reachedEndOfPoint = true;
+            m_path = null;
             return;
         } else
         {
@@ -82,6 +106,12 @@ public class FooPeople : Character
 
     protected override void Update()
     {
+        if(m_reachedEndOfPoint)
+        {
+            m_reachedEndOfPoint = false;
+            m_currentTargetPoint++;
+            StartPath();
+        }
     }
 
     /// <summary>
@@ -91,6 +121,11 @@ public class FooPeople : Character
     {
         if(isInfected || isWarned)
             return;
+        
+        if (m_rb.IsSleeping()) 
+        {
+            m_rb.WakeUp();
+        }
 
         isInfected = true;
         gameObject.AddComponent<InfectionSource>();
@@ -106,9 +141,16 @@ public class FooPeople : Character
         if(isInfected || isWarned)
             return;
 
+        if (m_rb.IsSleeping()) 
+        {
+            m_rb.WakeUp();
+        }
+
         isWarned = true;
         //播放被警示的特效，停止一切移动
         StartCoroutine(PlayVFX());
+
+        AudioController.instance.PlayOneShotSound(AudioController.SoundType.PeopleGetWarn);
     }
 
     IEnumerator PlayVFX()

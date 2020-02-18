@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: -61146139
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3734571714437771704, guid: 39842a0e88a049448b8983d3bf33a4f0,
+  m_Sprite: {fileID: 1468876982958238567, guid: 39842a0e88a049448b8983d3bf33a4f0,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_VFX_dustVFX: {fileID: 8373766825973389228}
   m_VFX_shield: {fileID: 1384198452384125707}
   m_VFX_whistleWave: {fileID: 1088966865098391003}
+  m_isInfected: 0
 --- !u!1 &855446816881699998
 GameObject:
   m_ObjectHideFlags: 0

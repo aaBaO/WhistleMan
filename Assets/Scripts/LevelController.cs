@@ -6,6 +6,7 @@ public class LevelController : Singleton<LevelController>
 {
     string m_currentSceneName;
     public bool currentLevelSuccess = false;
+    public int savedPeopleCount = 0;
 
     public void StartLevel(string sceneName)
     {

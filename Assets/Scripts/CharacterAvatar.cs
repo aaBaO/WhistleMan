@@ -18,6 +18,7 @@ public class CharacterAvatar : MonoBehaviour
 
     public void SetMaskInteraction(SpriteMaskInteraction mode)
     {
+        Debug.Log("here set begin");
         m_maskInteraction = mode;
         foreach(var r in m_allSprite)
         {
@@ -25,8 +26,10 @@ public class CharacterAvatar : MonoBehaviour
         }
         //Also set VFX
         ParticleSystemRenderer[] psrs = transform.parent.GetComponentsInChildren<ParticleSystemRenderer>();
+        Debug.Log("here get psrs, length:" + psrs.Length);
         foreach(var psr in psrs)
         {
+            Debug.Log("here set psr");
             psr.maskInteraction = mode;   
         }
     }
