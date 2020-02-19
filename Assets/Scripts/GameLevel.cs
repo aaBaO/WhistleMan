@@ -77,13 +77,6 @@ public class GameLevel : MonoBehaviour
         //You'll win if you save more then target count.
         GameViewManager.instance.OpenView(GameViewConst.GameResultView);
         LevelController.instance.savedPeopleCount =  warnedPeopleCount;
-        if(safePeopleCount >= targetSaveCount)
-        {
-            LevelController.instance.currentLevelSuccess = true;
-        } else
-        {
-            LevelController.instance.currentLevelSuccess = false;
-        }
         m_isEndOfLevel = true;
     }
 }

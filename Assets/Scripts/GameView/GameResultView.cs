@@ -17,12 +17,15 @@ public class GameResultView : MonoBehaviour, IGameView
         btn_nextLevel.onClick.AddListener(OnClick_btn_nextLevel);
         btn_back.onClick.AddListener(OnClick_btn_back);
 
-        if(LevelController.instance.currentLevelSuccess)
+        if(LevelController.instance.savedPeopleCount > 15)
         {
-            OnGameWin();
-        } else
+            txt_result.text = "厉害啊,救了这么多人,可以拯救世界了!";
+        } else if (LevelController.instance.savedPeopleCount > 5)
         {
-            OnGameLose();
+            txt_result.text = "不错,不错,再接再厉!";
+        }else
+        {
+            txt_result.text = "只能拯救这么多人?怕是人都没有找齐吧?";
         }
     }
 

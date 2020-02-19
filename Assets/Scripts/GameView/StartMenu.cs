@@ -39,5 +39,7 @@ public class StartMenu : MonoBehaviour, IGameView
 
     void OnClick_btn_quit()
     {
+        if(!Application.isEditor)
+            Application.Quit();
     }
 }
