@@ -1290,6 +1290,7 @@ Transform:
   - {fileID: 498977756}
   - {fileID: 145955117}
   - {fileID: 335650461}
+  - {fileID: 636154485}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2239,6 +2240,70 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34220112acace5f4db4c33de06c4872d, type: 3}
+--- !u!1 &636154484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636154485}
+  - component: {fileID: 636154486}
+  m_Layer: 8
+  m_Name: HotfixObstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &636154485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636154484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -35.32, y: -25.49, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 382199853}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &636154486
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636154484}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -3.9346886, y: 3.7324219}
+      - {x: -3.979515, y: -2.4324856}
+      - {x: -3.2943497, y: -2.4053211}
+      - {x: -3.2462883, y: 3.1507359}
+      - {x: 2.387989, y: 3.1894608}
+      - {x: 2.3632317, y: -2.448471}
+      - {x: 3.0287437, y: -2.448471}
+      - {x: 3.0641289, y: 3.7700863}
 --- !u!1001 &743473005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11598,6 +11663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: characterType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948011755115081259, guid: 34220112acace5f4db4c33de06c4872d,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3948011755115081260, guid: 34220112acace5f4db4c33de06c4872d,
         type: 3}
